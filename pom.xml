@@ -7,7 +7,6 @@
 		<groupId>com.bps</groupId>
 		<artifactId>BranchPickingSystem</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../pom.xml</relativePath> <!-- Adjust path if needed -->
 	</parent>
 
 	<groupId>com.example.consolidation</groupId>
@@ -29,7 +28,6 @@
 		<url />
 	</scm>
 	<properties>
-		<EurekaServerApp-modelVersion>4.29.1</EurekaServerApp-modelVersion>
 		<java.version>17</java.version>
 		<spring-cloud.version>2024.0.0</spring-cloud.version>
 	</properties>
