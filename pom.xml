@@ -7,6 +7,7 @@
 		<groupId>com.bps</groupId>
 		<artifactId>BranchPickingSystem</artifactId>
 		<version>1.0.0</version>
+		<relativePath>../pom.xml</relativePath> <!-- Or correct relative path -->
 	</parent>
 
 	<groupId>com.example.consolidation</groupId>
@@ -29,7 +30,9 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2024.0.0</spring-cloud.version>
+		<spring-boot.version>3.3.2</spring-boot.version>  <!-- updated -->
+		<spring-cloud.version>2023.0.5</spring-cloud.version> <!-- check if
+		latest is compatible -->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -71,13 +74,19 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
+<build>
+	<plugins>
+		<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<executions>
+				<execution>
+					<goals>
+						<goal>repackage</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+	</plugins>
+</build>
 </project>
