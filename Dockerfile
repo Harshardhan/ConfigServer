@@ -1,30 +1,30 @@
 # ===================== Stage 1: Build the application =====================
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 
-# Set the working directory to project root
 WORKDIR /app
 
-# Copy only required files first for caching dependencies
-COPY . .
-# Pre-fetch dependencies
-RUN ./mvnw dependency:go-offline -B
-
-# Copy the entire project
+# Copy entire project early so Maven can see all modules
 COPY . .
 
-RUN ./mvnw clean package -pl EurekaServerApp -am -DskipTests
+
+# Now go offline successfully (all modules exist now)
+RUN mvn dependency:go-offline -B
+
+# Build only EurekaServerApp module
+RUN mvn clean package -pl EurekaServerApp -am -DskipTests
 
 # ===================== Stage 2: Run the application =====================
 FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-# Create logs directory
-RUN mkdir -p /app/logs
+RUN apk add --no-cache curl
+RUN mkdir -p logs
 
-# Copy the built JAR
-COPY --from=build /app/EurekaServerApp/target/*.jar EurekaServerApp.jar
+COPY --from=build /app/EurekaServerApp/target/EurekaServerApp-0.0.1-SNAPSHOT.jar EurekaServerApp.jar
 
 EXPOSE 8761
+
+ENV SPRING_PROFILES_ACTIVE=dev
 
 ENTRYPOINT ["java", "-jar", "EurekaServerApp.jar"]
