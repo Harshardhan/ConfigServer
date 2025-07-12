@@ -11,7 +11,7 @@ COPY . .
 RUN mvn dependency:go-offline -B
 
 # Build only EurekaServerApp module
-RUN mvn clean package -pl EurekaServerApp -am -DskipTests
+RUN mvn clean package -DskipTests
 
 # ===================== Stage 2: Run the application =====================
 FROM eclipse-temurin:17-jre-alpine
